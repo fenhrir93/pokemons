@@ -6,8 +6,10 @@ interface Move {
 }
 
 export interface PokemonType {
-  name: string;
-  url: string;
+  type: {
+    name: string;
+    url: string;
+  };
 }
 
 interface Sprites {

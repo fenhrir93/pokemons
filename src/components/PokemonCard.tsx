@@ -7,7 +7,7 @@ interface PokemonCardProps {
 }
 export const PokemonCard: FC<PokemonCardProps> = ({ children }) => {
   return (
-    <Card>
+    <Card variant="solid">
       <CardContent>{children}</CardContent>
     </Card>
   );

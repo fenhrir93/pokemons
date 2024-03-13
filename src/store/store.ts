@@ -1,8 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import pokemonReducer from "./pokemonSlice";
+import pokemonApi from "../services/serivces";
+import paginationReducer from "./paginationSlice";
 export const store = configureStore({
   reducer: {
-    pokemon: pokemonReducer,
+    pagination: paginationReducer,
+    [pokemonApi.reducerPath]: pokemonApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(pokemonApi.middleware);
   },
 });
 
