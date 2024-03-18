@@ -26,6 +26,7 @@ const pokemonApi = createApi({
 
       merge: (currentCacheData, responseData) => {
         if (
+          currentCacheData &&
           Array.isArray(currentCacheData.results) &&
           Array.isArray(responseData.results)
         ) {
@@ -49,7 +50,7 @@ const pokemonApi = createApi({
           url: `type/${pokemonType}`,
         };
       },
-      transformResponse: (rawResult: { pokemon: Pokemon[] }) => {
+      transformResponse: (rawResult: { pokemon: unknown }) => {
         const { pokemon } = rawResult;
         return { pokemon };
       },
