@@ -1,30 +1,40 @@
-# React + TypeScript + Vite
+# Технології, Використані у Проекті
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vite:
 
-Currently, two official plugins are available:
+Vite використовується як основний інструмент для швидкого розроблення та побудови проекту. Він надає ефективний розвиток завдяки своїй швидкості та простоті конфігурації.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Mui (Material-UI):
 
-## Expanding the ESLint configuration
+Mui використовується для створення інтерфейсу користувача з використанням стандартних компонентів та дизайну згідно із матеріальним дизайном.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+React Router DOM:
 
-- Configure the top-level `parserOptions` property like this:
+React Router DOM використовується для навігації між сторінками вашого React-додатку та керування URL-адресами.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Redux:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Redux є інструментом управління станом, який дозволяє ефективно керувати станом додатку та ділити його між різними компонентами.
+
+ChatGPT:
+
+Цей чат-бот використовує модель мови GPT для надання відповідей на запитання та взаємодії з користувачем у реальному часі.
+
+# Інструкція з Розгортання Проекту Локально
+
+Клонуйте репозиторій: Спочатку склонуйте репозиторій проекту з GitHub на свій локальний комп'ютер.
+
+git clone <git@github.com:fenhrir93/pokemons.git>
+
+Встановіть залежності: Перейдіть у папку проекту та встановіть всі необхідні залежності за допомогою npm або yarn.
+
+npm install
+
+Запустіть проект: Після встановлення залежностей запустіть проект, використовуючи команду для розробки.
+
+npm run dev
+
+Перегляньте результати: Відкрийте свій веб-браузер і перейдіть за адресою <http://localhost:5173> щоб переглянути розгорнутий проект локально.
+
+Посилання на Сторінку Деплою
+Деплой проекту: <https://vimpokemons.netlify.app/>
