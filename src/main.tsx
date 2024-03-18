@@ -14,6 +14,7 @@ const routes = createBrowserRouter([
   {
     path: "details/:name",
     element: <DetailsPage />,
+    errorElement: <>There are no such pokemon</>,
   },
 ]);
 // biome-ignore lint/style/noNonNullAssertion: <explanation>

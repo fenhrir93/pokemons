@@ -9,8 +9,7 @@ const pokemonApi = createApi({
   endpoints: (build) => ({
     getPokemons: build.query<ApiResponse, number>({
       query: (offset: number) => ({
-        url: "",
-        method: "get",
+        url: "pokemon",
         params: {
           limit: 20,
           offset: offset * 20,
@@ -33,11 +32,26 @@ const pokemonApi = createApi({
         return previousArg !== currentArg;
       },
     }),
-    getPokemonDetails: build.query({
-      query: (name: string) => ({ url: `/${name}`, method: "get" }),
+    getPokemonByName: build.query({
+      query: (name: string) => ({ url: `pokemon/${name}` }),
+    }),
+    getPokemonsType: build.query<ApiResponse, void>({
+      query: () => ({ url: "type" }),
+    }),
+    getTypedPokemons: build.query<ApiResponse, string>({
+      query: (pokemonType: string) => {
+        return {
+          url: `type/${pokemonType}`,
+        };
+      },
     }),
   }),
 });
 
-export const { useGetPokemonsQuery, useGetPokemonDetailsQuery } = pokemonApi;
+export const {
+  useGetPokemonsQuery,
+  useGetPokemonByNameQuery,
+  useGetPokemonsTypeQuery,
+  useGetTypedPokemonsQuery,
+} = pokemonApi;
 export default pokemonApi;

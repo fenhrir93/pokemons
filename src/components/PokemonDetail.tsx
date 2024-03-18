@@ -1,4 +1,5 @@
 import { Sheet, Table, Typography } from "@mui/joy";
+import { FC } from "react";
 import { Pokemon } from "../models/pokemon";
 interface Column {
   id: "moves" | "types";
@@ -8,13 +9,17 @@ interface Column {
   align?: "right";
   format?: (value: number) => string;
 }
-
 const columns: readonly Column[] = [
   { id: "moves", label: "Moves" },
   { id: "types", label: "Types" },
 ];
 
-export const PokemonDetail = ({ pokemon }: { pokemon: Pokemon }) => {
+interface PokemonDetailProps {
+  data: Pokemon;
+  name: string;
+}
+
+export const PokemonDetail: FC<PokemonDetailProps> = ({ data, name }) => {
   return (
     <>
       <Typography
@@ -25,7 +30,7 @@ export const PokemonDetail = ({ pokemon }: { pokemon: Pokemon }) => {
         fontSize="xl"
         fontWeight="lg"
       >
-        {pokemon.name}
+        {name}
       </Typography>
       <Sheet
         sx={{
@@ -60,12 +65,12 @@ export const PokemonDetail = ({ pokemon }: { pokemon: Pokemon }) => {
             </tr>
           </thead>
           <tbody>
-            {pokemon.moves.map((move, index) => (
+            {data.moves.map((move, index) => (
               <tr key={move.move.name}>
                 <td key="moves">{move.move.name}</td>
                 <td key="types">
-                  {pokemon.types[index]?.type.name
-                    ? pokemon.types[index]?.type.name
+                  {data.types[index]?.type.name
+                    ? data.types[index]?.type.name
                     : ""}
                 </td>
               </tr>
