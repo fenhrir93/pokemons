@@ -1,6 +1,6 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Pokemon } from "../../models/pokemon";
 import {
   useGetPokemonsQuery,
@@ -8,7 +8,7 @@ import {
 } from "../../services/serivces";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setOffset } from "../../store/paginationSlice";
-import { PokemonCard } from "../PokemonCard";
+import { PokemonCard } from "../PokemonCard/PokemonCard";
 import PokemonSearch from "../Search/Search";
 
 const PokemonList = () => {
@@ -16,6 +16,7 @@ const PokemonList = () => {
   const { page } = useAppSelector((state) => state.pagination);
   const [mode, setMode] = useState(true);
   const [pokemonsType, setPokemonsType] = useState("");
+  const typeFromRoute = useParams();
 
   const { data, isLoading } = useGetPokemonsQuery(page);
 
@@ -23,14 +24,20 @@ const PokemonList = () => {
     skip: pokemonsType.length === 0,
   });
 
-  const onNextHandler = () => {
-    if (!mode) return;
-    dispatch(setOffset());
-  };
+  useEffect(() => {
+    if (typeFromRoute.type) {
+      setPokemonsType(typeFromRoute.type);
+      setMode(false);
+    }
+  }, [typeFromRoute.type]);
 
   const onPokemonTypeFilter = (type: string) => {
     setPokemonsType(type);
     setMode(false);
+  };
+  const onNextHandler = () => {
+    if (!mode) return;
+    dispatch(setOffset());
   };
 
   if (isLoading) {

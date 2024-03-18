@@ -16,6 +16,10 @@ const routes = createBrowserRouter([
     element: <DetailsPage />,
     errorElement: <>There are no such pokemon</>,
   },
+  {
+    path: "type/:type",
+    element: <App />,
+  },
 ]);
 // biome-ignore lint/style/noNonNullAssertion: <explanation>
 createRoot(document.getElementById("root")!).render(

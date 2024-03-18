@@ -20,6 +20,7 @@ function PokemonSearch({
 
   const onPokemonTypeFilterHandler = (value: string | null) => {
     if (!value) return;
+
     onPokemonTypeFilter(value);
   };
 

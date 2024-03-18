@@ -1,5 +1,7 @@
-import { Sheet, Table, Typography } from "@mui/joy";
+import { ArrowBack } from "@mui/icons-material";
+import { Button, Sheet, Table, Typography } from "@mui/joy";
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { Pokemon } from "../models/pokemon";
 interface Column {
   id: "moves" | "types";
@@ -20,16 +22,29 @@ interface PokemonDetailProps {
 }
 
 export const PokemonDetail: FC<PokemonDetailProps> = ({ data, name }) => {
+  const onReturnNavigationHandler = () => {
+    window.history.back();
+  };
   return (
     <>
       <Typography
         level="body-md"
-        textAlign="center"
-        sx={{ mb: 2 }}
+        sx={{
+          mb: 2,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
         color="neutral"
         fontSize="xl"
         fontWeight="lg"
       >
+        <Button onClick={onReturnNavigationHandler}>
+          <ArrowBack />
+        </Button>
+        {data.sprites.front_default && (
+          <img src={data.sprites.front_default} alt={name} />
+        )}
         {name}
       </Typography>
       <Sheet
@@ -65,16 +80,22 @@ export const PokemonDetail: FC<PokemonDetailProps> = ({ data, name }) => {
             </tr>
           </thead>
           <tbody>
-            {data.moves.map((move, index) => (
-              <tr key={move.move.name}>
-                <td key="moves">{move.move.name}</td>
-                <td key="types">
-                  {data.types[index]?.type.name
-                    ? data.types[index]?.type.name
-                    : ""}
-                </td>
-              </tr>
-            ))}
+            {data.moves.map((pokemonMove, index) => {
+              return (
+                <tr key={pokemonMove.move.name}>
+                  <td key="moves">{pokemonMove.move.name}</td>
+                  <td key="types">
+                    {data.types[index]?.type.name ? (
+                      <Link to={`/type/${data.types[index].type.name}`}>
+                        {data.types[index]?.type.name}
+                      </Link>
+                    ) : (
+                      ""
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
       </Sheet>
