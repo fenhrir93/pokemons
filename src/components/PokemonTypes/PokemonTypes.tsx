@@ -4,6 +4,9 @@ import { PokemonCard } from "../PokemonCard";
 
 const PokemonTypes = () => {
   const { data, isLoading } = useGetPokemonsTypeQuery();
+  if (!(data && Array.isArray(data?.results))) {
+    return;
+  }
 
   return (
     <div>

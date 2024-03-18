@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
 import {
@@ -16,6 +16,8 @@ const PokemonList = () => {
   const [mode, setMode] = useState(true);
   const [pokemonsType, setPokemonsType] = useState("");
 
+  let content: ReactElement = <p>Loading...</p>;
+
   const { data, isLoading } = useGetPokemonsQuery(page);
 
   const { data: typedPokemons } = useGetTypedPokemonsQuery(pokemonsType, {
@@ -32,10 +34,52 @@ const PokemonList = () => {
     setMode(false);
   };
 
+  if (
+    data &&
+    Array.isArray(data?.results) &&
+    typedPokemons &&
+    Array.isArray(typedPokemons?.pokemon)
+  ) {
+    content = (
+      <InfiniteScroll
+        dataLength={data.results.length}
+        next={onNextHandler}
+        hasMore={data.count !== data.results.length}
+        loader={mode && <p>Loading...</p>}
+        scrollableTarget="scrollableDiv"
+      >
+        {pokemonsType &&
+          typedPokemons.pokemon.length > 0 &&
+          typedPokemons.pokemon.map(({ name }) => {
+            return (
+              <Link
+                to={`/details/${name}`}
+                key={name}
+                style={{ marginBottom: 4, display: "block" }}
+              >
+                <PokemonCard key={name}>{name}</PokemonCard>
+              </Link>
+            );
+          })}
+        {!isLoading &&
+          !pokemonsType &&
+          data?.results.map((pokemon) => (
+            <Link
+              to={`/details/${pokemon.name}`}
+              key={pokemon.name}
+              style={{ marginBottom: 4, display: "block" }}
+            >
+              <PokemonCard key={pokemon.name}>{pokemon.name}</PokemonCard>
+            </Link>
+          ))}
+      </InfiniteScroll>
+    );
+  }
+
   return (
     <>
       <PokemonSearch onPokemonTypeFilter={onPokemonTypeFilter} />
-      {data && (
+      {data?.results && (
         <div
           id="scrollableDiv"
           style={{
@@ -44,37 +88,7 @@ const PokemonList = () => {
             height: "60dvh",
           }}
         >
-          <InfiniteScroll
-            dataLength={data.results.length}
-            next={onNextHandler}
-            hasMore={data.count !== data.results.length}
-            loader={mode && <p>Loading...</p>}
-            scrollableTarget="scrollableDiv"
-          >
-            {pokemonsType &&
-              typedPokemons?.pokemon?.map(({ pokemon }) => {
-                return (
-                  <Link
-                    to={`/details/${pokemon.name}`}
-                    key={pokemon.name}
-                    style={{ marginBottom: 4, display: "block" }}
-                  >
-                    <PokemonCard key={pokemon.name}>{pokemon.name}</PokemonCard>
-                  </Link>
-                );
-              })}
-            {!isLoading &&
-              !pokemonsType &&
-              data?.results.map((pokemon) => (
-                <Link
-                  to={`/details/${pokemon.name}`}
-                  key={pokemon.name}
-                  style={{ marginBottom: 4, display: "block" }}
-                >
-                  <PokemonCard key={pokemon.name}>{pokemon.name}</PokemonCard>
-                </Link>
-              ))}
-          </InfiniteScroll>
+          {content}
         </div>
       )}
     </>

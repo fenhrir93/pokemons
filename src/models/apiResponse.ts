@@ -1,6 +1,6 @@
 import { Pokemon } from "./pokemon";
 
-export interface ApiResponse {
-  results: Pokemon[];
-  count: number;
-}
+export type ApiResponse = {
+  [key: string]: Pokemon[] | number | undefined;
+  count?: number;
+};

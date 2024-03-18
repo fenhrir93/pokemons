@@ -25,7 +25,12 @@ const pokemonApi = createApi({
       },
 
       merge: (currentCacheData, responseData) => {
-        currentCacheData.results.push(...responseData.results);
+        if (
+          Array.isArray(currentCacheData.results) &&
+          Array.isArray(responseData.results)
+        ) {
+          currentCacheData?.results.push(...responseData.results);
+        }
       },
 
       forceRefetch: ({ previousArg, currentArg }) => {
@@ -43,6 +48,10 @@ const pokemonApi = createApi({
         return {
           url: `type/${pokemonType}`,
         };
+      },
+      transformResponse: (rawResult: { pokemon: Pokemon[] }) => {
+        const { pokemon } = rawResult;
+        return { pokemon };
       },
     }),
   }),
