@@ -24,7 +24,7 @@ ChatGPT:
 
 Клонуйте репозиторій: Спочатку склонуйте репозиторій проекту з GitHub на свій локальний комп'ютер.
 
-git clone <git@github.com:fenhrir93/pokemons.git>
+git clone git@github.com:fenhrir93/pokemons.git
 
 Встановіть залежності: Перейдіть у папку проекту та встановіть всі необхідні залежності за допомогою npm або yarn.
 
